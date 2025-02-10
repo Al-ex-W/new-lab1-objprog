@@ -1,59 +1,45 @@
 import java.awt.*;
 
-public class Scania extends Car{
-
-    private double torque;
-    private double trunkAngle;
-
+public class Scania extends LoaderCar{
     public Scania() {
-        super(2, Color.pink, 125, "Scania");
-        torque = 950;
-        trunkAngle = 0;
+        //Loader(int drs, Color clr, double engPow, String modName, double capacity)
+        super(2, Color.pink, 1500, "Scania", 5);
     }
 
-    public double getTrunkAngle() {
-        return trunkAngle;
-    }
-
-    public void setTrunkAngle(double amount)    {
+/*    public void changeTrunkAngle(double amount) {
         double newAngle = amount;
 
-        if(newAngle < 0 || newAngle > 70)   {
-            System.out.println("Angle must be between 0 and 70.");
+        if (newAngle < 0 || newAngle > 70) {
+            throw new IllegalArgumentException("Angle must be between 0 and 70.");
             //ksk exception?
-        } else if(getCurrentSpeed()!=0) {
-            System.out.println("Angle can only be changed at standstill.");
+        } else if (getCurrentSpeed() != 0) {
+            throw new IllegalArgumentException("Angle can only change at standstill.");
             //ksk exception?
         } else {
-            trunkAngle = newAngle;
+            setTrunkAngle(newAngle);
         }
     }
 
-    //vi behöver 2 til funktioner: lowerTrunkAngle och 
-
-    public double lowerTrunkAngle(double amount) {
+    public void lowerTrunkAngle(double amount) {
         double newAngle = getTrunkAngle() - amount;
-        return(newAngle);
+        changeTrunkAngle(newAngle);
     }
 
-    public double raiseTrunkAngle(double amount) {
+    public void raiseTrunkAngle(double amount) {
         double newAngle = getTrunkAngle() + amount;
-        return(newAngle);
+        changeTrunkAngle(newAngle);
     }
-    
+
     @Override
-    public void gas(double amount) {
-        
-        if (trunkAngle != 0) {
-            //om trunk angel är höjt
-            System.out.println("cannot gas while trunk is raised.");
-            //exception??
-        } else {
-            super.gas(amount);
-        }
+    public void lowerTrunkAngle() {
+        System.out.println("lowering trunk 10 degree...");
+        lowerTrunkAngle(10);
     }
-    // använd super.gas()
 
-   
+    @Override
+    public void raiseTrunkAngle() {
+        System.out.println("raising trunk 10 degree...");
+        raiseTrunkAngle(10);
 
+    }
 }

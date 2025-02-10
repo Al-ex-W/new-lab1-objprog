@@ -1,0 +1,39 @@
+Följande förhållanden ska gälla:
+
+    //1.Biltransportens ramp har endast två lägen, uppe eller nere.
+    //2.Rampen kan endast vara nere om biltransporten står stilla.
+    // 3.Bilar kan endast lastas om rampen är nere, och de befinner sig rimligt nära biltransporten (gör ett eget antagande, de exakta detaljerna är inte viktiga).
+    4.Bilar kan endast lossas om rampen är nere. De bör då hamna rimligt nära biltransporten.
+    5.Bilar kan endast lossas i omvänd ordning från hur de lastades, dvs den sista bilen som lastades måste vara först att lossas (first-in-last-out).
+    6.Biltransporten ska inte kunna lasta på en annan biltransport.
+    7.Under det att en bil är lastad på biltransporten ska dess position i världen alltid vara densamma som biltransportens position.
+
+Viktiga saker att ha i åtanke under den här uppgiften:
+
+    Undvik kodduplicering för funktionalitet som är gemensam för flera olika klasser, e.g. lastbil och biltransport.
+    Fundera över behovet av polymorfism för olika ändamål, och hur det påverkar framtida extensibilitet.
+    Fundera över hur ni bäst håller reda på de bilar som lastats - vilken sorts datastruktur är bäst för ändamålet?
+
+Kom ihåg att skriva JUnit-tester för relevanta aspekter av er kod. Best practice: skriv unit-tester innan ni uppdaterar koden.
+
+Uppgift 3: Parametrisk polymorfism
+
+Skapa en representation av en bilverkstad. Följande aspekter ska hanteras:
+
+    En verkstad ska kunna ta emot ("lasta"?) ett antal bilar, upp till något max-antal som kan variera mellan olika verkstäder.
+    Vissa verkstäder ska bara kunna ta emot en viss sorts bilar; andra kan ta emot vilka bilar som helst.
+    Att försöka lämna in "fel" sorts bil i en verkstad ska ge ett statiskt (compile time) fel.
+    Vid uthämtning av en bil från verkstaden ska vi kunna få så precis typinformation som möjligt statiskt.
+        Exempel: För en märkesverkstad som enbart hanterar Volvo 240 bör vi statiskt kunna veta att bilar som hämtas ut från verkstaden alltid är just Volvo 240.
+
+
+JUNIT TESTER SOM BORDE GÖRAS:
+
+//1. SCANIA: HÖJA SÄNKA FLAK
+//2. TRANSPORTER:
+//- HÖJA SÄNKA FLAK
+- lASTA BILAR
+- SLÄPPA BILAR
+- kOLLA BILARS POSIITON UNDER TIDEN OCH EFTER FRAKTEN
+- FÖRSÖKA LASTA SCANIA I TRANSPORTER
+
