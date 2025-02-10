@@ -85,6 +85,15 @@ public abstract class Car implements Movable{
         return y;
     }
 
+    public void setX(double val){
+        x = val;
+    }
+
+
+    public void setY(double val){
+        y = val;
+    }
+
     public double speedFactor(){
         return getEnginePower() * 0.01;
     }

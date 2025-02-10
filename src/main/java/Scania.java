@@ -18,7 +18,7 @@ public class Scania extends LoaderCar{
         } else {
             setTrunkAngle(newAngle);
         }
-    }
+    } */
 
     public void lowerTrunkAngle(double amount) {
         double newAngle = getTrunkAngle() - amount;
