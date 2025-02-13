@@ -91,11 +91,8 @@ public class CarTest {
     @Test
     public void TestScaniatrunk() {
         Scania scania = new Scania();
-        System.out.println("Trunk angel should be 0 now: " + scania.getTrunkAngle());
-        scania.raiseTrunkAngle();
-        System.out.println("Trunk angel should be 10 now: " + scania.getTrunkAngle());
         assertThrows(IllegalArgumentException.class, () -> scania.raiseTrunkAngle(1000000));
-        assertThrows(IllegalArgumentException.class, scania::move);
+        scania.raiseTrunkAngle(20);
         assertThrows(IllegalArgumentException.class, scania::move);
     }
 
@@ -138,7 +135,7 @@ public class CarTest {
         transporter.move();
         transporter.brake(1);
         assertNotEquals(transporter.getY(), volvo240.getY(), 0.0);
-        Scania scania = new Scania();
+        // Scania scania = new Scania();
         // assertThrows(IllegalArgumentException.class, () -> transporter.addCar(scania));
 
 
