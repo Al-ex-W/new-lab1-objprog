@@ -6,6 +6,7 @@ public class Saab95 extends LoadableCar {
 
     public Saab95() {
         super(2, Color.red, 125, "Saab95");
+        setY(100);
         turboOn = false;
     }
 

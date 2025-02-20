@@ -16,26 +16,25 @@ public class CarController {
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
+    public Timer timer = new Timer(delay, new TimerListener());
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Car> cars = new ArrayList<>();
+    int xCoord;
+    int yCoord;
+
+
+    Workshop<Volvo240> workshop = new Workshop<>(1);
+
 
     //methods:
-
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-        cc.cars.add(new Volvo240());
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-
-        // Start the timer
-        cc.timer.start();
+    private void turnAround(Car car){
+        car.stopEngine();
+        car.turnRight();
+        car.turnRight();
+        car.startEngine();
     }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
@@ -43,16 +42,32 @@ public class CarController {
     * */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            int index = 0;
             for (Car car : cars) {
                 System.out.println("car current speed: " + car.getCurrentSpeed());
                 System.out.println("car x: " + car.getX());
                 System.out.println("car y: " + car.getY());
                 car.move();
+                if (car.getY() < 0) {
+                    car.setY(0);
+                    turnAround(car);
+                } else if (car.getY() > frame.drawPanel.getPreferredSize().height - 60) {
+                    car.setY(frame.drawPanel.getPreferredSize().height - 60);
+                    turnAround(car);
+                }
                 int x = (int) Math.round(car.getX());
                 int y = (int) Math.round(car.getY());
-                frame.drawPanel.moveit(x, y);
+
+                if (car instanceof Volvo240 && car.getY() > 300) {
+                    workshop.addCar((Volvo240) car);
+                    car.setY(300);
+                    car.setX(300);
+                }
+
+                frame.drawPanel.moveit(x, y, index);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
+                index += 1;
             }
         }
     }
@@ -63,6 +78,27 @@ public class CarController {
         for (Car car : cars
                 ) {
             car.gas(gas);
+        }
+    }
+
+    void brake(int amount) {
+        double brake = ((double) amount) / 100;
+        for (Car car : cars
+        ) {
+            car.brake(brake);
+        }
+    }
+
+    void setTurbo(boolean val) {
+        for (Car car : cars) {
+            if (car instanceof Saab95) {
+                if (val) {
+                    ((Saab95) car).setTurboOn();
+                }
+                else {
+                    ((Saab95) car).setTurboOff();
+                }
+            }
         }
     }
 }

@@ -14,8 +14,12 @@ import java.awt.event.ActionListener;
  **/
 
 public class CarView extends JFrame{
-    private static final int X = 800;
-    private static final int Y = 800;
+    private final int X = 800;
+    private final int Y = 800;
+
+    int[] getJFrameSize() {
+        return new int[]{X, Y};
+    }
 
     // The controller member
     CarController carC;
@@ -24,10 +28,10 @@ public class CarView extends JFrame{
 
     JPanel controlPanel = new JPanel();
 
-    JPanel gasPanel = new JPanel();
-    JSpinner gasSpinner = new JSpinner();
-    int gasAmount = 0;
-    JLabel gasLabel = new JLabel("Amount of gas");
+    JPanel amountPanel = new JPanel();
+    JSpinner amountSpinner = new JSpinner();
+    int Amount = 0;
+    JLabel amountLabel = new JLabel("Amount of gas/brake");
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
@@ -62,18 +66,18 @@ public class CarView extends JFrame{
                         0, //min
                         100, //max
                         1);//step
-        gasSpinner = new JSpinner(spinnerModel);
-        gasSpinner.addChangeListener(new ChangeListener() {
+        amountSpinner = new JSpinner(spinnerModel);
+        amountSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                gasAmount = (int) ((JSpinner)e.getSource()).getValue();
+                Amount = (int) ((JSpinner)e.getSource()).getValue();
             }
         });
 
-        gasPanel.setLayout(new BorderLayout());
-        gasPanel.add(gasLabel, BorderLayout.PAGE_START);
-        gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
+        amountPanel.setLayout(new BorderLayout());
+        amountPanel.add(amountLabel, BorderLayout.PAGE_START);
+        amountPanel.add(amountSpinner, BorderLayout.PAGE_END);
 
-        this.add(gasPanel);
+        this.add(amountPanel);
 
         controlPanel.setLayout(new GridLayout(2,4));
 
@@ -104,10 +108,31 @@ public class CarView extends JFrame{
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.gas(gasAmount);
+                carC.gas(Amount);
             }
         });
 
+        brakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.brake(Amount);
+            }
+        });
+
+        turboOnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.setTurbo(true);
+            }
+        });
+
+        turboOffButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.setTurbo(false);
+            }
+        });
+    
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 
