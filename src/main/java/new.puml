@@ -1,0 +1,131 @@
+@startuml
+@startuml
+interface Movable {
+  + move() : void
+  + turnLeft() : void
+  + turnRight() : void
+}
+
+class WorldObject {
+
+}
+
+
+class Car extends WorldObject implements Movable {
+  - nrDoors : int
+  - enginePower : double
+  - currentSpeed : double
+  - color : Color
+  - modelName : String
+  - dirIndex : int
+  - x : double
+  - y : double
+    + Car() : void
+  + getNrDoors() : int
+  + getEnginePower() : double
+  + getCurrentSpeed() : double
+  + getColor() : Color
+  + setColor(clr : Color) : void
+  + startEngine() : void
+  + stopEngine() : void
+  + turnLeft() : void
+  + turnRight() : void
+  + move() : void
+  + getX() : double
+  + getY() : double
+  + setX(val : double) : void
+  + setY(val : double) : void
+  + speedFactor() : double
+  + gas(amount : double) : void
+  + brake(amount : double) : void
+  - incrementSpeed(amount : double) : void
+  - decrementSpeed(amount : double) : void
+}
+
+class LoadableCar extends Car {
+    LoadableCar() : void
+}
+
+class LoaderCar extends Car {
+  - trunk : Trunk
+  + LoaderCar() : void
+  + changeTrunkAngle(amount : double) : void
+  + getTrunkAngle() : double
+  + @Override move() : void
+}
+
+class Saab95 extends LoadableCar {
+  - turboOn : boolean
+    + Saab95() : void
+  + setTurboOn() : void
+  + setTurboOff() : void
+  + speedFactor() : double
+}
+
+class Scania extends LoaderCar {
+  + Scania() : void
+  + lowerTrunkAngle(amount : double) : void
+  + raiseTrunkAngle(amount : double) : void
+}
+
+class Transporter extends LoaderCar {
+  - List<LoadableCar> loadedCarList
+  + Transporter() : void
+  + carIsClose(carToLoad : Car) : boolean
+  + addCar(carToLoad : LoadableCar) : void
+  + releaseCar() : void
+  + lowerTrunkAngle() : void
+  + raiseTrunkAngle() : void
+  + move() : void
+}
+
+class Volvo240 extends LoadableCar {
+    + Volvo240() : void
+  + speedFactor() : double
+}
+
+class Workshop<T extends LoadableCar> extends WorldObject {
+  - capacity : Integer
+  + addCar(car : T) : void
+  + releaseCar(car : T) : void
+}
+
+class Trunk {
+  - trunkAngle : double
+  + getCapacity() : Integer
+  + getTrunkAngle() : double
+  + setTrunkAngle(amount : double) : void
+}
+
+class CarController {
+  - turnAround(car : Car) : void
+  + actionPerformed(e : ActionEvent) : void
+}
+
+class CarView extends JFrame {
+  - initComponents(title : String) : void
+  + stateChanged(e : ChangeEvent) : void
+  + actionPerformed(e : ActionEvent) : void
+}
+
+
+class DrawPanel extends JPanel {
+  - volvoImage : BufferedImage
+  - moveit(x : int, y : int, index : int) : void
+  + paintComponent(g : Graphics) : void
+}
+
+class Main {
+  + main(args : String[]) : void
+}
+
+
+LoaderCar --* Trunk
+Workshop ..* LoadableCar
+CarController --|> DrawPanel
+CarView --|> DrawPanel
+CarController o.. CarView
+CarView o.. DrawPanel
+@enduml
+
+@enduml

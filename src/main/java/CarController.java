@@ -101,4 +101,29 @@ public class CarController {
             }
         }
     }
+
+    void liftBed(boolean val) {
+        for (Car car : cars) {
+            if (car instanceof Scania) {
+                if (val) {
+                    ((Scania) car).raiseTrunkAngle(70);
+                }
+                else {
+                    ((Scania) car).lowerTrunkAngle(70);
+                }
+            }
+        }
+    }
+
+    void startEngine() {
+        for (Car car : cars) {
+            car.startEngine();
+        }
+    }
+
+    void stopEngine() {
+        for (Car car : cars) {
+            car.stopEngine();
+        }
+    }
 }
