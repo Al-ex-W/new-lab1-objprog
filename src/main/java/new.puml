@@ -7,7 +7,12 @@ interface Movable {
 }
 
 class WorldObject {
-
+    - x : double
+    - y : double
+    + getX() : double
+    + getY() : double
+    + setX(val : double) : void
+    + setY(val : double) : void
 }
 
 
@@ -18,8 +23,6 @@ class Car extends WorldObject implements Movable {
   - color : Color
   - modelName : String
   - dirIndex : int
-  - x : double
-  - y : double
     + Car() : void
   + getNrDoors() : int
   + getEnginePower() : double
@@ -31,10 +34,6 @@ class Car extends WorldObject implements Movable {
   + turnLeft() : void
   + turnRight() : void
   + move() : void
-  + getX() : double
-  + getY() : double
-  + setX(val : double) : void
-  + setY(val : double) : void
   + speedFactor() : double
   + gas(amount : double) : void
   + brake(amount : double) : void
@@ -100,7 +99,15 @@ class Trunk {
 class CarController {
   - turnAround(car : Car) : void
   + actionPerformed(e : ActionEvent) : void
+  + gas(amount : double) : void
+  + brake( amount : double) : void
+  + setTurbo(val : boolean) : void
+  + liftbead(val : boolean) : void
+  + startEngine() : void
+  + stopEngine() : void
+
 }
+
 
 class CarView extends JFrame {
   - initComponents(title : String) : void
@@ -126,6 +133,7 @@ CarController --|> DrawPanel
 CarView --|> DrawPanel
 CarController o.. CarView
 CarView o.. DrawPanel
+CarController --* WorldObject
 @enduml
 
 @enduml
