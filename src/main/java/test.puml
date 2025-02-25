@@ -1,0 +1,7 @@
+@startuml
+class Person{
+    String name
+    Int High()
+
+}
+@enduml
