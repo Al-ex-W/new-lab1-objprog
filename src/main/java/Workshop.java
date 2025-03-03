@@ -1,10 +1,11 @@
 import java.util.List;
 import java.util.*;
 
-public class Workshop<T extends Car>{
+public class Workshop<T extends Car> extends WorldObject {
     private Integer capacity;
     private final List<T> storedCarList = new ArrayList<>();
     public Workshop(int cap){
+        super();
         capacity = cap;
     }
 

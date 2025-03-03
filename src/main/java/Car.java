@@ -1,23 +1,20 @@
 import java.awt.*;
 
-public abstract class Car implements Movable{
+public abstract class Car extends WorldObject implements Movable{
     private int nrDoors;
     private double enginePower;
     private double currentSpeed;
     private Color color;
     private String modelName;
     private int dirIndex;
-    private double x;
-    private double y;
 
     public Car(int drs, Color clr, double engPow, String modName){
+        super();
         nrDoors = drs;
         color = clr;
         enginePower = engPow;
         modelName = modName;
         dirIndex = 0;
-        x = 0;
-        y = 0;
         stopEngine();
     }
 
@@ -63,35 +60,18 @@ public abstract class Car implements Movable{
     public void move(){
         switch(dirIndex){
             case 0:
-                y += currentSpeed;
+                super.setY(super.getY() + currentSpeed);
                 break;
             case 1:
-                x += currentSpeed;
+                super.setX(super.getX() + currentSpeed);
                 break;
             case 2:
-                y -= currentSpeed;
+                super.setY(super.getY() - currentSpeed);
                 break;
             case 3:
-                x -= currentSpeed;
+                super.setY(super.getX() - currentSpeed);
                 break;
         }
-    }
-
-    public double getX(){
-        return x;
-    }
-
-    public double getY(){
-        return y;
-    }
-
-    public void setX(double val){
-        x = val;
-    }
-
-
-    public void setY(double val){
-        y = val;
     }
 
     public double speedFactor(){
