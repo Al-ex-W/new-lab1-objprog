@@ -7,6 +7,7 @@ public abstract class Car extends WorldObject implements Movable{
     private Color color;
     private String modelName;
     private int dirIndex;
+    private boolean isStored;
 
     public Car(int drs, Color clr, double engPow, String modName){
         super();
@@ -16,6 +17,13 @@ public abstract class Car extends WorldObject implements Movable{
         modelName = modName;
         dirIndex = 0;
         stopEngine();
+        isStored = false;
+    }
+    public void store(){
+        isStored = true;
+    }
+    public void unStore(){
+        isStored = false;
     }
 
     public int getNrDoors(){
@@ -58,19 +66,21 @@ public abstract class Car extends WorldObject implements Movable{
 
     @Override
     public void move(){
-        switch(dirIndex){
-            case 0:
-                super.setY(super.getY() + currentSpeed);
-                break;
-            case 1:
-                super.setX(super.getX() + currentSpeed);
-                break;
-            case 2:
-                super.setY(super.getY() - currentSpeed);
-                break;
-            case 3:
-                super.setY(super.getX() - currentSpeed);
-                break;
+        if (!isStored) {
+            switch (dirIndex) {
+                case 0:
+                    super.setY(super.getY() + currentSpeed);
+                    break;
+                case 1:
+                    super.setX(super.getX() + currentSpeed);
+                    break;
+                case 2:
+                    super.setY(super.getY() - currentSpeed);
+                    break;
+                case 3:
+                    super.setY(super.getX() - currentSpeed);
+                    break;
+            }
         }
     }
 

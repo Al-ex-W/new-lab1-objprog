@@ -17,7 +17,7 @@ public class DrawPanel extends JPanel{
     BufferedImage scaniaImage;
 
 
-    Point volvoWorkshopPoint = new Point(300,300);
+    Point volvoWorkshopPoint = new Point(300, 300);
     List<Point> carPoints = new ArrayList<>();
     List<BufferedImage> carImages = new ArrayList<>();
 
@@ -68,6 +68,12 @@ public class DrawPanel extends JPanel{
                 break;
         }
     }
+
+    public void removeModelFromPanel() {
+        carPoints.remove(carPoints.size() - 1);
+        carImages.remove(carImages.size() - 1);
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {

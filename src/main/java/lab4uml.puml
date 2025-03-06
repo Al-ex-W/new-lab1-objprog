@@ -1,0 +1,225 @@
+@startuml
+
+' Gränssnitt
+interface Movable {
+  + void move()
+  + void turnLeft()
+  + void turnRight()
+}
+
+' Abstrakta klasser
+abstract class Car extends WorldObject implements Movable {
+  - int nrDoors
+  - double enginePower
+  - double currentSpeed
+  - Color color
+  - String modelName
+  - int dirIndex
+  - boolean isStored
+  + Car(int drs, Color clr, double engPow, String modName)
+  + void store()
+  + void unStore()
+  + int getNrDoors()
+  + double getEnginePower()
+  + double getCurrentSpeed()
+  + Color getColor()
+  + void setColor(Color clr)
+  + void startEngine()
+  + void stopEngine()
+  + void turnLeft()
+  + void turnRight()
+  + void move()
+  + double speedFactor()
+  + void gas(double amount)
+  + void brake(double amount)
+}
+
+abstract class LoadableCar extends Car {
+  + LoadableCar(int drs, Color clr, double engPow, String modName)
+}
+
+abstract class LoaderCar extends Car {
+  - Trunk trunk
+  + LoaderCar(int drs, Color clr, double engPow, String modName, int cap)
+  + void changeTrunkAngle(double amount)
+  + double getTrunkAngle()
+  + void gas(double amount)
+}
+
+' Konkreta klasser
+class Saab95 extends LoadableCar {
+  - boolean turboOn
+  + Saab95()
+  + void setTurboOn()
+  + void setTurboOff()
+  + double speedFactor()
+}
+
+class Scania extends LoaderCar {
+  + Scania()
+  + void lowerTrunkAngle(double amount)
+  + void raiseTrunkAngle(double amount)
+}
+
+class Transporter extends LoaderCar {
+  + static final double LOWERED
+  + static final double RAISED
+  - List<LoadableCar> loadedCarList
+  + Transporter()
+  + boolean carIsClose(Car carToLoad)
+  + void addCar(LoadableCar carToLoad)
+  + void releaseCar()
+  + void lowerTrunkAngle()
+  + void raiseTrunkAngle()
+  + void move()
+}
+
+class Volvo240 extends LoadableCar {
+  - static final double trimFactor
+  + Volvo240()
+  + double speedFactor()
+}
+
+class WorldObject {
+  - double x
+  - double y
+  + WorldObject()
+  + double getX()
+  + double getY()
+  + void setX(double x)
+  + void setY(double y)
+}
+
+class Workshop<T extends Car> extends WorldObject {
+  - Integer capacity
+  - List<T> storedCarList
+  + Workshop(int cap)
+  + List<T> getStoredCarList()
+  + void addCar(T car)
+  + void releaseCar(T car)
+  + double getX()
+  + double getY()
+}
+
+class CarChecker {
+  - CarController cc
+  + CarChecker(CarController cc)
+  + void check(Car car)
+}
+
+class CarController {
+  - int delay
+  - Timer timer
+  - CarView frame
+  - Point workshopPoint
+  - Workshop<Volvo240> workshop
+  - CarChecker checker
+  - double frameWidth
+  - double frameHeight
+  - int workshopCap
+  - ArrayList<Car> cars
+  - int xCoord
+  - int yCoord
+  + void turnAround(Car car)
+  + void carIsCloseToEdge(Car car, Dirs dir)
+  + void setCarX(Car car, int x)
+  + void setCarY(Car car, int y)
+  + void addToWorkshop(Car car)
+  + void gas(int amount)
+  + void brake(int amount)
+  + void setTurbo(boolean val)
+  + void liftBed(boolean val)
+  + void startEngine()
+  + void stopEngine()
+  + void addCar(Models_enum car)
+  + void removeCar()
+}
+
+class CarView extends JFrame {
+  - int X
+  - int Y
+  - CarController carC
+  - DrawPanel drawPanel
+  - JPanel controlPanel
+  - JPanel amountPanel
+  - JSpinner amountSpinner
+  - int Amount
+  - JLabel amountLabel
+  - JButton gasButton
+  - JButton addButton
+  - JButton removeButton
+  - JButton brakeButton
+  - JButton turboOnButton
+  - JButton turboOffButton
+  - JButton liftBedButton
+  - JButton lowerBedButton
+  - JButton startButton
+  - JButton stopButton
+  + CarView(String framename, CarController cc)
+  - void initComponents(String title)
+}
+
+class DrawPanel extends JPanel {
+  - BufferedImage volvoWorkshopImage
+  - BufferedImage volvo240Image
+  - BufferedImage saab95Image
+  - BufferedImage scaniaImage
+  - Point volvoWorkshopPoint
+  - List<Point> carPoints
+  - List<BufferedImage> carImages
+  + void moveit(int x, int y, int index)
+  + DrawPanel(int x, int y)
+  + void addModelToPanel(Models_enum model)
+  + void removeModelFromPanel()
+  + void paintComponent(Graphics g)
+}
+
+class CCFactory {
+  + void create()
+}
+
+class Main {
+  + static void main(String[] args)
+}
+
+class Trunk {
+  - double trunkAngle
+  - int capacity
+  + Trunk(double angle, int cap)
+  + Integer getCapacity()
+  + double getTrunkAngle()
+  + void setTrunkAngle(double amount)
+}
+
+' Enums
+enum Models_enum {
+  VOLVO240
+  SAAB95
+  SCANIA
+  RANDOMCAR
+  + static Models_enum getRandomModel()
+}
+
+enum Dirs {
+  SOUTH
+  EAST
+  NORTH
+  WEST
+}
+
+' Relationer
+LoaderCar *-- Trunk
+Transporter o-- "0..*" LoadableCar
+Workshop o-- "0..*" Car
+CarController *-- CarView
+CarController *-- Workshop
+CarController *-- CarChecker
+CarController o-- "0..*" Car
+CarView *-- DrawPanel
+DrawPanel --> Models_enum
+CarChecker --> CarController
+CCFactory --> CarController
+Main --> CCFactory
+CarController --> Dirs
+
+@enduml
