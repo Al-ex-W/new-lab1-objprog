@@ -18,7 +18,7 @@ public class CarChecker {
             cc.carIsCloseToEdge(car, Dirs.EAST);
         }
 
-        if (car instanceof Volvo240 && car.getY() > 300) {
+        if (cc.workshop.getStoredCarList().size() < cc.workshopCap  && car instanceof Volvo240 && (cc.workshopPoint.y < car.getY() && car.getY() < (cc.workshopPoint.y + 100)) && (cc.workshopPoint.x < car.getX() && car.getX() < (cc.workshopPoint.x + 100))) {
             cc.addToWorkshop(car);
         }
     }

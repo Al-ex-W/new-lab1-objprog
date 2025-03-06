@@ -137,13 +137,6 @@ public class CarView extends JFrame{
         });
 
 
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                carC.addCar(Models_enum.RANDOMCAR);
-            }
-        });
-
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,14 +155,15 @@ public class CarView extends JFrame{
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                carC.addCar(Models_enum.RANDOMCAR);
             }
         });
+
 
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                carC.removeCar();
             }
         });
 

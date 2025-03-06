@@ -14,19 +14,21 @@ public class CarController {
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     public Timer timer = new Timer(delay, new TimerListener());
-    public CarChecker checker;
     // The frame that represents this instance View of the MVC pattern
-    CarView frame;
+    CarView frame = new CarView("CarSim 1.0", this);
+    Point workshopPoint = frame.drawPanel.volvoWorkshopPoint;
+    Workshop<Volvo240> workshop = new Workshop<>(1);
+    public CarChecker checker;
     double frameWidth;
     double frameHeight;
+    int workshopCap = 1;
     // A list of cars, modify if needed
     ArrayList<Car> cars = new ArrayList<>();
     int xCoord;
     int yCoord;
 
     void turnAround(Car car){
-        car.stopEngine();
-        car.turnRight();
+        //car.stopEngine();
         car.turnRight();
         car.startEngine();
     }
@@ -49,8 +51,6 @@ public class CarController {
         turnAround(car);
     }
 
-    Workshop<Volvo240> workshop = new Workshop<>(1);
-
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             int index = 0;
@@ -64,9 +64,9 @@ public class CarController {
                     frame.drawPanel.moveit(x, y, index);
                     // repaint() calls the paintComponent method of the panel
                     // ha kvar  frame.drawPanel.repaint();
-                    frame.drawPanel.repaint();
                     index += 1;
                 }
+                frame.drawPanel.repaint();
         }
     }
 
@@ -80,6 +80,7 @@ public class CarController {
 
     void addToWorkshop(Car car) {
         workshop.addCar((Volvo240) car);
+
         car.setY(300);
         car.setX(300);
     }
@@ -148,26 +149,36 @@ public class CarController {
 
 
     void addCar(Models_enum car) {
-        System.out.println("inside cc addCar with car enum:");
-        System.out.println(car);
-        if(car == Models_enum.RANDOMCAR) {
-            addCar(Models_enum.getRandomModel());
-        } else {
-            switch(car){
-                case VOLVO240:
-                    cars.add(new Volvo240());
-                    System.out.println("adding volvo car!");
-                    break;
-                case SAAB95:
-                    cars.add(new Saab95());
-                    System.out.println("adding saab car!");
-                    break;
-                case SCANIA:
-                    cars.add(new Scania());
-                    System.out.println("adding scania car!");
-                    break;
+
+        if (cars.size() < 10) {
+            System.out.println("inside cc addCar with car enum:");
+            System.out.println(car);
+            if(car == Models_enum.RANDOMCAR) {
+                addCar(Models_enum.getRandomModel());
+            } else {
+                switch(car){
+                    case VOLVO240:
+                        cars.add(new Volvo240());
+                        System.out.println("adding volvo car!");
+                        break;
+                    case SAAB95:
+                        cars.add(new Saab95());
+                        System.out.println("adding saab car!");
+                        break;
+                    case SCANIA:
+                        cars.add(new Scania());
+                        System.out.println("adding scania car!");
+                        break;
+                }
+                frame.drawPanel.addModelToPanel(car);
             }
-            frame.drawPanel.addModelToPanel(car);
+        }
+    }
+
+    void removeCar() {
+        if (!cars.isEmpty()) {
+            cars.remove(cars.size() - 1);
+            frame.drawPanel.removeModelFromPanel();
         }
     }
 }
