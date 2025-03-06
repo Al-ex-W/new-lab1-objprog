@@ -20,13 +20,13 @@ public class CarView extends JFrame{
     DrawPanel drawPanel = new DrawPanel(X, Y-240);
 
     JPanel controlPanel = new JPanel();
-
     JPanel amountPanel = new JPanel();
     JSpinner amountSpinner = new JSpinner();
     int Amount = 0;
     JLabel amountLabel = new JLabel("Amount of gas/brake");
-
     JButton gasButton = new JButton("Gas");
+    JButton addButton = new JButton("Add Car");
+    JButton removeButton = new JButton("Remove Car");
     JButton brakeButton = new JButton("Brake");
     JButton turboOnButton = new JButton("Saab Turbo on");
     JButton turboOffButton = new JButton("Saab Turbo off");
@@ -72,13 +72,14 @@ public class CarView extends JFrame{
         this.add(amountPanel);
 
         controlPanel.setLayout(new GridLayout(2,4));
-
         controlPanel.add(gasButton, 0);
         controlPanel.add(turboOnButton, 1);
         controlPanel.add(liftBedButton, 2);
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addButton, 6);
+        controlPanel.add(removeButton, 7);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -154,7 +155,20 @@ public class CarView extends JFrame{
         });
 
 
-    
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();
 

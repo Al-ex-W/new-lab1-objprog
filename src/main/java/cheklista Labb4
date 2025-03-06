@@ -1,0 +1,17 @@
+1. refactorisera så det fungerar
+2. Nytt uml diagram
+3. add and renove car
+4. fixa lodedecar finnare
+
+Observer:
+Vi försökte lägga till en typ av observer "carchecker" som skulle kolla villkor som "är bilen nära kanten", "är volvon nära workshopen", men den är inte riktigt en observer dåå även den kommunicerar med modellen. Denna förändring gjorde mer att controllern och checkern får egna ansvar (som i SRP).
+Dock kan detta förbättras ännu mer genom att låta checkern bli en ren observer som kollar viewen och sedan skickar observationer till och endast till controllern, som att en bil är nära kanten. detta förbättrar koncepten low cupling high cohesion eftersom vi har bara en kanal mellan controller och modeln istället för 2.
+
+Factory:
+Vi gjorde om applikationen (main) från att kalla massa "seemingly" random funktioner från MVC strukturen till att kalla en CCFactory. CCFactory
+
+State:
+
+
+Composite:
+Vi har en Composite genom att våran "Carcontroller" är byggd som ett träde där det ör ryggraden av hela koden.

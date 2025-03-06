@@ -95,10 +95,14 @@ class Trunk {
   + getTrunkAngle() : double
   + setTrunkAngle(amount : double) : void
 }
-
-class CarController {
+class CarChecker {
   - turnAround(car : Car) : void
   + actionPerformed(e : ActionEvent) : void
+
+}
+
+class CarController {
+
   + gas(amount : double) : void
   + brake( amount : double) : void
   + setTurbo(val : boolean) : void
@@ -107,6 +111,7 @@ class CarController {
   + stopEngine() : void
 
 }
+
 
 
 class CarView extends JFrame {
@@ -126,7 +131,9 @@ class Main {
   + main(args : String[]) : void
 }
 
-
+CarChecker --o CarView
+CarChecker --o CarController
+CarController --o CarChecker
 LoaderCar --* Trunk
 Workshop ..* LoadableCar
 CarController --|> DrawPanel

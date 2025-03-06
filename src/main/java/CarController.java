@@ -12,7 +12,7 @@ public class CarController {
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
     public Timer timer = new Timer(delay, new TimerListener());
-
+    public CarChecker checker;
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
@@ -20,50 +20,49 @@ public class CarController {
     int xCoord;
     int yCoord;
 
-
-    Workshop<Volvo240> workshop = new Workshop<>(1);
-
-
-    //methods:
-    private void turnAround(Car car){
+    void turnAround(Car car){
         car.stopEngine();
         car.turnRight();
         car.turnRight();
         car.startEngine();
     }
 
+    Workshop<Volvo240> workshop = new Workshop<>(1);
+
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             int index = 0;
-            for (Car car : cars) {
-                System.out.println("car current speed: " + car.getCurrentSpeed());
-                System.out.println("car x: " + car.getX());
-                System.out.println("car y: " + car.getY());
-                car.move();
-                if (car.getY() < 0) {
-                    car.setY(0);
-                    turnAround(car);
-                } else if (car.getY() > frame.drawPanel.getPreferredSize().height - 60) {
-                    car.setY(frame.drawPanel.getPreferredSize().height - 60);
-                    turnAround(car);
+                for (Car car : cars) {
+                    System.out.println("running car move loop for");
+                    System.out.println(car);
+                    car.move();
+                    checker.check(car);
+                    int x = (int) Math.round(car.getX());
+                    int y = (int) Math.round(car.getY());
+                    frame.drawPanel.moveit(x, y, index);
+                    // repaint() calls the paintComponent method of the panel
+                    // ha kvar  frame.drawPanel.repaint();
+                    frame.drawPanel.repaint();
+                    index += 1;
                 }
-                int x = (int) Math.round(car.getX());
-                int y = (int) Math.round(car.getY());
-
-                if (car instanceof Volvo240 && car.getY() > 300) {
-                    workshop.addCar((Volvo240) car);
-                    car.setY(300);
-                    car.setX(300);
-                }
-
-                frame.drawPanel.moveit(x, y, index);
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
-                index += 1;
-            }
         }
     }
 
+    void setCarX(Car car,int x) {
+        car.setX(x);
+    }
+
+    void setCarY(Car car,int Y) {
+        car.setY(Y);
+    }
+
+    void addToWorkshop(Car car) {
+        workshop.addCar((Volvo240) car);
+        car.setY(300);
+        car.setX(300);
+    }
+
+    //byt Pltas till "Car Facade"
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
@@ -72,6 +71,7 @@ public class CarController {
             car.gas(gas);
         }
     }
+    //byt Pltas till "Car Facade"
 
     void brake(int amount) {
         double brake = ((double) amount) / 100;
@@ -80,6 +80,7 @@ public class CarController {
             car.brake(brake);
         }
     }
+    //byt Pltas till "Car Facade"
 
     void setTurbo(boolean val) {
         for (Car car : cars) {
@@ -93,6 +94,7 @@ public class CarController {
             }
         }
     }
+    //byt Pltas till "Car Facade"
 
     void liftBed(boolean val) {
         for (Car car : cars) {
@@ -106,12 +108,14 @@ public class CarController {
             }
         }
     }
+    //byt Pltas till "Car Facade"
 
     void startEngine() {
         for (Car car : cars) {
             car.startEngine();
         }
     }
+    //byt Pltas till "Car Facade"
 
     void stopEngine() {
         for (Car car : cars) {
