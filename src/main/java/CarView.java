@@ -10,10 +10,6 @@ public class CarView extends JFrame{
     private final int X = 800;
     private final int Y = 800;
 
-    int[] getJFrameSize() {
-        return new int[]{X, Y};
-    }
-
     // The controller member
     CarController carC;
 
@@ -137,6 +133,14 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 carC.liftBed(false);
+            }
+        });
+
+
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.addCar(Models_enum.RANDOMCAR);
             }
         });
 

@@ -12,11 +12,14 @@ public class DrawPanel extends JPanel{
 
 
     BufferedImage volvoWorkshopImage;
+    BufferedImage volvo240Image;
+    BufferedImage saab95Image;
+    BufferedImage scaniaImage;
+
+
     Point volvoWorkshopPoint = new Point(300,300);
     List<Point> carPoints = new ArrayList<>();
     List<BufferedImage> carImages = new ArrayList<>();
-
-
 
     // TODO: Make this general for all cars
     void moveit(int x, int y, int index){
@@ -31,15 +34,17 @@ public class DrawPanel extends JPanel{
         this.setBackground(Color.green);
         // Print an error message in case file is not found with a try/catch block
         try {
-
-            carPoints.add(new Point(0, 0));
-            carPoints.add(new Point(0, 0));
-            carPoints.add(new Point(0, 0));
-
-            carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("/images/Volvo240.jpg")));
-            carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("/images/Saab95.jpg")));
-            carImages.add(ImageIO.read(DrawPanel.class.getResourceAsStream("/images/Scania.jpg")));
             volvoWorkshopImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/images/VolvoBrand.jpg"));
+            volvo240Image = ImageIO.read(DrawPanel.class.getResourceAsStream("/images/Volvo240.jpg"));
+            saab95Image = ImageIO.read(DrawPanel.class.getResourceAsStream("/images/Saab95.jpg"));
+            scaniaImage = ImageIO.read(DrawPanel.class.getResourceAsStream("/images/Scania.jpg"));
+
+            //carPoints.add(new Point(0, 0));
+            //carPoints.add(new Point(0, 0));
+
+
+            //carImages.add(saab95Image);
+            //carImages.add(scaniaImage);
         } catch (IOException ex)
         {
             ex.printStackTrace();
@@ -47,6 +52,22 @@ public class DrawPanel extends JPanel{
 
     }
 
+    public void addModelToPanel(Models_enum model) {
+        switch (model) {
+            case VOLVO240:
+                carPoints.add(new Point(0, 0));
+                carImages.add(volvo240Image);
+                break;
+            case SAAB95:
+                carPoints.add(new Point(0, 0));
+                carImages.add(saab95Image);
+                break;
+            case SCANIA:
+                carPoints.add(new Point(0, 0));
+                carImages.add(scaniaImage);
+                break;
+        }
+    }
 
     @Override
     protected void paintComponent(Graphics g) {

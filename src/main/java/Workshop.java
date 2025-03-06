@@ -10,12 +10,13 @@ public class Workshop<T extends Car> extends WorldObject {
     }
 
     public void addCar(T car) {
-        if (storedCarList.size() < capacity) {
-            storedCarList.add(car);
-            System.out.println(" Alloed to Sotre");
-        }else {
-            System.out.println(" Storage is full");
-
+        if (!storedCarList.contains(car)) {
+            if (storedCarList.size() < capacity) {
+                    storedCarList.add(car);
+                    System.out.println(" Allowed to store");
+            } else {
+                System.out.println(" Storage is full");
+            }
         }
     }
     public void releaseCar(T car) {

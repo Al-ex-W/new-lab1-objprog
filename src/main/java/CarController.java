@@ -1,7 +1,9 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 
 
 
@@ -15,6 +17,8 @@ public class CarController {
     public CarChecker checker;
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
+    double frameWidth;
+    double frameHeight;
     // A list of cars, modify if needed
     ArrayList<Car> cars = new ArrayList<>();
     int xCoord;
@@ -25,6 +29,24 @@ public class CarController {
         car.turnRight();
         car.turnRight();
         car.startEngine();
+    }
+
+    void carIsCloseToEdge(Car car, Dirs dir){
+        switch(dir) {
+            case SOUTH:
+                setCarY(car, (int) frameHeight);
+                break;
+            case  EAST:
+                setCarX(car, (int) frameWidth);
+                break;
+            case NORTH:
+                setCarY(car,0);
+                break;
+            case WEST:
+                setCarX(car,0);
+                break;
+        }
+        turnAround(car);
     }
 
     Workshop<Volvo240> workshop = new Workshop<>(1);
@@ -120,6 +142,32 @@ public class CarController {
     void stopEngine() {
         for (Car car : cars) {
             car.stopEngine();
+        }
+    }
+
+
+
+    void addCar(Models_enum car) {
+        System.out.println("inside cc addCar with car enum:");
+        System.out.println(car);
+        if(car == Models_enum.RANDOMCAR) {
+            addCar(Models_enum.getRandomModel());
+        } else {
+            switch(car){
+                case VOLVO240:
+                    cars.add(new Volvo240());
+                    System.out.println("adding volvo car!");
+                    break;
+                case SAAB95:
+                    cars.add(new Saab95());
+                    System.out.println("adding saab car!");
+                    break;
+                case SCANIA:
+                    cars.add(new Scania());
+                    System.out.println("adding scania car!");
+                    break;
+            }
+            frame.drawPanel.addModelToPanel(car);
         }
     }
 }
