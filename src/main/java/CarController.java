@@ -103,7 +103,6 @@ public class CarController {
             car.brake(brake);
         }
     }
-    //byt Pltas till "Car Facade"
 
     void setTurbo(boolean val) {
         for (Car car : cars) {
@@ -117,7 +116,6 @@ public class CarController {
             }
         }
     }
-    //byt Pltas till "Car Facade"
 
     void liftBed(boolean val) {
         for (Car car : cars) {
